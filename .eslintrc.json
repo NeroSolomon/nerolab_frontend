@@ -1,0 +1,13 @@
+{
+  "root": true,
+  "extends": ["react-app", "eslint:recommended", "plugin:prettier/recommended"],
+  "parser": "babel-eslint",
+  "plugins": ["prettier", "react"],
+  "env": {
+    "es6": true,
+    "browser": true,
+    "node": true,
+    "jquery": true,
+    "mocha": true
+  }
+}
