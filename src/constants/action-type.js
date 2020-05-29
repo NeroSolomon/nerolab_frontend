@@ -1,0 +1,5 @@
+// language.js
+export const LANGUAGE_REQUEST = "LANGUAGE_REQUEST";
+export const LANGUAGE_SUCCESS = "LANGUAGE_SUCCESS";
+export const LANGUAGE_FAILURE = "LANGUAGE_FAILURE";
+export const LANGUAGE_REUSE = "LANGUAGE_REUSE";
