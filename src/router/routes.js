@@ -1,11 +1,15 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import Frame from "~/src/containers/frame/Frame.jsx";
+import Posts from "~/src/containers/posts/Posts.jsx";
 
 export default (
-  <div>
+  <Switch>
     <Route exact path="/">
       <Frame />
     </Route>
-  </div>
+    <Route path="/posts">
+      <Posts />
+    </Route>
+  </Switch>
 );
