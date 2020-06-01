@@ -14,7 +14,7 @@ export function requestLanguage() {
 
 export function receiveLanguage(appLocale) {
   const { key } = appLocale;
-  cookie.set("language", key);
+  cookie.set("language", key, { expires: 365 });
 
   return {
     type: LANGUAGE_SUCCESS,
@@ -34,5 +34,23 @@ export function reuseLanguage(appLocale) {
   return {
     ...receiveLanguage(appLocale),
     type: LANGUAGE_REUSE,
+  };
+}
+
+export function changeLanguage(key) {
+  return (dispatch, getState) => {
+    const { language } = getState();
+    const appLocale = language[key];
+    if (appLocale) {
+      dispatch(reuseLanguage(appLocale));
+    } else {
+      dispatch(requestLanguage());
+
+      if ("cn" === key) {
+        console.log("cn");
+      } else {
+        console.log("en");
+      }
+    }
   };
 }
