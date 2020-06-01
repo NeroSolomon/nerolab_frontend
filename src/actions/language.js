@@ -4,7 +4,7 @@ import {
   LANGUAGE_SUCCESS,
   LANGUAGE_FAILURE,
   LANGUAGE_REUSE,
-} from "src/constants/action-type.js";
+} from "~/src/constants/action-type.js";
 
 export function requestLanguage() {
   return {
@@ -47,9 +47,17 @@ export function changeLanguage(key) {
       dispatch(requestLanguage());
 
       if ("cn" === key) {
-        console.log("cn");
+        import(/* webpackChunkName: "locale-cn" */ "~/src/locales/cn.js").then(
+          (res) => {
+            console.log(res);
+          }
+        );
       } else {
-        console.log("en");
+        import(/* webpackChunkName: "locale-en" */ "~/src/locales/en.js").then(
+          (res) => {
+            console.log(res);
+          }
+        );
       }
     }
   };

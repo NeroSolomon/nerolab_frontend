@@ -3,7 +3,7 @@ import {
   LANGUAGE_SUCCESS,
   LANGUAGE_FAILURE,
   LANGUAGE_REUSE,
-} from "~src/constants/action-type.js";
+} from "~/src/constants/action-type.js";
 import initialState from "./initial-state.js";
 
 export default function language(state = initialState.language, action) {

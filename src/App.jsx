@@ -1,7 +1,11 @@
 import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
+import { Provider } from "react-redux";
 import routes from "~/src/router/routes.js";
+import { configStore } from "~/src/store/store-config.js";
 import "./App.css";
+
+const store = configStore();
 
 class App extends React.Component {
   constructor(props) {
@@ -12,7 +16,9 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <Router>{routes}</Router>
+        <Provider store={store}>
+          <Router>{routes}</Router>
+        </Provider>
       </div>
     );
   }
