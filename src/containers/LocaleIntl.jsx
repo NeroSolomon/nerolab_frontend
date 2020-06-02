@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { addLocaleData, IntlProvider } from "react-intl";
-import { Spin } from "antd";
+import { ConfigProvider, Spin } from "antd";
 import { changeLanguage } from "~/src/actions/language.js";
 
 class LocaleIntl extends React.Component {
@@ -33,9 +33,11 @@ class LocaleIntl extends React.Component {
       addLocaleData(appLocale.data);
 
       result = (
-        <IntlProvider locale={appLocale.locale} messages={appLocale.msg}>
-          {this.props.children}
-        </IntlProvider>
+        <ConfigProvider locale={appLocale.antd}>
+          <IntlProvider locale={appLocale.locale} messages={appLocale.msg}>
+            {this.props.children}
+          </IntlProvider>
+        </ConfigProvider>
       );
     }
     return result;

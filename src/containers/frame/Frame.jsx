@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { FormattedMessage } from "react-intl";
+import { DatePicker } from "antd";
 
 class Frame extends React.Component {
   constructor(props) {
@@ -12,6 +13,7 @@ class Frame extends React.Component {
     return (
       <div>
         <FormattedMessage id="guide.tips" />
+        <DatePicker />
       </div>
     );
   }
