@@ -1,4 +1,6 @@
 import React from "react";
+import { connect } from "react-redux";
+import { FormattedMessage } from "react-intl";
 
 class Frame extends React.Component {
   constructor(props) {
@@ -7,8 +9,19 @@ class Frame extends React.Component {
   }
 
   render() {
-    return <div>frame</div>;
+    return (
+      <div>
+        <FormattedMessage id="guide.tips" />
+      </div>
+    );
   }
 }
 
-export default Frame;
+function mapStateToProps(state) {
+  const { language } = state;
+  return {
+    language,
+  };
+}
+
+export default connect(mapStateToProps)(Frame);
