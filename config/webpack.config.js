@@ -22,6 +22,7 @@ const getClientEnvironment = require("./env");
 const ModuleNotFoundPlugin = require("react-dev-utils/ModuleNotFoundPlugin");
 const ForkTsCheckerWebpackPlugin = require("react-dev-utils/ForkTsCheckerWebpackPlugin");
 const typescriptFormatter = require("react-dev-utils/typescriptFormatter");
+const antdTheme = require("./antd-theme");
 
 const postcssNormalize = require("postcss-normalize");
 
@@ -47,6 +48,8 @@ const cssRegex = /\.css$/;
 const cssModuleRegex = /\.module\.css$/;
 const sassRegex = /\.(scss|sass)$/;
 const sassModuleRegex = /\.module\.(scss|sass)$/;
+const lessRegex = /\.less$/;
+const lessModuleRegex = /\.module\.less$/;
 
 // This is the production and development configuration.
 // It is focused on developer experience, fast rebuilds, and a minimal bundle.
@@ -108,20 +111,31 @@ module.exports = function (webpackEnv) {
       },
     ].filter(Boolean);
     if (preProcessor) {
-      loaders.push(
-        {
-          loader: require.resolve("resolve-url-loader"),
-          options: {
-            sourceMap: isEnvProduction && shouldUseSourceMap,
-          },
-        },
-        {
+      if (preProcessor === "less-loader") {
+        loaders.push({
           loader: require.resolve(preProcessor),
           options: {
-            sourceMap: true,
+            sourceMap: isEnvProduction && shouldUseSourceMap,
+            modifyVars: antdTheme,
+            javascriptEnabled: true,
           },
-        }
-      );
+        });
+      } else {
+        loaders.push(
+          {
+            loader: require.resolve("resolve-url-loader"),
+            options: {
+              sourceMap: isEnvProduction && shouldUseSourceMap,
+            },
+          },
+          {
+            loader: require.resolve(preProcessor),
+            options: {
+              sourceMap: true,
+            },
+          }
+        );
+      }
     }
     return loaders;
   };
@@ -482,6 +496,39 @@ module.exports = function (webpackEnv) {
                   },
                 },
                 "sass-loader"
+              ),
+            },
+            // Opt-in support for LESS.
+            // By default we support LESS Modules with the
+            // extensions .module.less or .module.less
+            {
+              test: lessRegex,
+              exclude: sassModuleRegex,
+              use: getStyleLoaders(
+                {
+                  importLoaders: 2,
+                  sourceMap: isEnvProduction && shouldUseSourceMap,
+                },
+                "less-loader"
+              ),
+              // Don't consider CSS imports dead code even if the
+              // containing package claims to have no side effects.
+              // Remove this when webpack adds a warning or an error for this.
+              // See https://github.com/webpack/webpack/issues/6571
+              sideEffects: true,
+            },
+            // Adds support for CSS Modules, but using LESS
+            // using the extension .module.less or .module.less
+            {
+              test: lessModuleRegex,
+              use: getStyleLoaders(
+                {
+                  importLoaders: 2,
+                  sourceMap: isEnvProduction && shouldUseSourceMap,
+                  modules: true,
+                  getLocalIdent: getCSSModuleLocalIdent,
+                },
+                "less-loader"
               ),
             },
             // "file" loader makes sure those assets get served by WebpackDevServer.
