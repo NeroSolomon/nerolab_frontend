@@ -49,13 +49,13 @@ export function changeLanguage(key) {
       if ("cn" === key) {
         import(/* webpackChunkName: "locale-cn" */ "~/src/locales/cn.js").then(
           (res) => {
-            console.log(res);
+            dispatch(receiveLanguage(res.default));
           }
         );
       } else {
         import(/* webpackChunkName: "locale-en" */ "~/src/locales/en.js").then(
           (res) => {
-            console.log(res);
+            dispatch(receiveLanguage(res.default));
           }
         );
       }

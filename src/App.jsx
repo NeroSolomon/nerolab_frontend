@@ -3,6 +3,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { Provider } from "react-redux";
 import routes from "~/src/router/routes.js";
 import { configStore } from "~/src/store/store-config.js";
+import LocaleIntl from "~/src/containers/LocaleIntl.jsx";
 import "./App.css";
 
 const store = configStore();
@@ -17,7 +18,9 @@ class App extends React.Component {
     return (
       <div className="App">
         <Provider store={store}>
-          <Router>{routes}</Router>
+          <LocaleIntl>
+            <Router>{routes}</Router>
+          </LocaleIntl>
         </Provider>
       </div>
     );

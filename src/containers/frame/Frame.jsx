@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { FormattedMessage } from "react-intl";
 
 class Frame extends React.Component {
   constructor(props) {
@@ -7,13 +8,12 @@ class Frame extends React.Component {
     this.state = {};
   }
 
-  componentDidMount() {
-    const { language } = this.props;
-    console.log(language, 999);
-  }
-
   render() {
-    return <div>frame</div>;
+    return (
+      <div>
+        <FormattedMessage id="guide.tips" />
+      </div>
+    );
   }
 }
 
