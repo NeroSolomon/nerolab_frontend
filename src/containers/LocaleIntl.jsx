@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { addLocaleData, IntlProvider } from "react-intl";
+import { Spin } from "antd";
 import { changeLanguage } from "~/src/actions/language.js";
 
 class LocaleIntl extends React.Component {
@@ -20,21 +21,24 @@ class LocaleIntl extends React.Component {
   render() {
     const {
       language,
-      language: { locale },
+      language: { isFetching, locale },
     } = this.props;
-    const appLocale = language[locale] || {};
 
-    // 添加语言包
-    addLocaleData(appLocale.data || {});
+    let result;
+    if (isFetching && !language[locale]) {
+      result = <Spin size="large" />;
+    } else {
+      // 添加语言包
+      const appLocale = language[locale];
+      addLocaleData(appLocale.data);
 
-    return (
-      <IntlProvider
-        locale={appLocale.locale || "en"}
-        messages={appLocale.msg || {}}
-      >
-        {this.props.children}
-      </IntlProvider>
-    );
+      result = (
+        <IntlProvider locale={appLocale.locale} messages={appLocale.msg}>
+          {this.props.children}
+        </IntlProvider>
+      );
+    }
+    return result;
   }
 }
 

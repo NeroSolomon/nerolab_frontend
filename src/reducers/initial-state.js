@@ -3,7 +3,7 @@ import { DEFAULT_LANGUAGE } from "~/src/config/static.js";
 
 export default {
   language: {
-    isFetching: false,
+    isFetching: true,
     locale: cookie.get("language") || DEFAULT_LANGUAGE,
   },
 };
